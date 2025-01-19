@@ -1,5 +1,4 @@
 import random
-from ftplib import print_line
 
 '''
 Escribe una función llamada imprimir_arbol que reciba un número entero n y dibuje
@@ -9,13 +8,14 @@ import random
 
 
 def imprimir_arbol(n):
-
     for i in range(n):
         espacio = ' ' * (n - i - 1)
         estrella = '*' * (2 * i + 1)
         print(espacio + estrella)
 
+print('\nEJERCICIO 1')
 imprimir_arbol(7)
+print('\n------------------------')
 
 '''
 Crea una función llamada filtrar_regalos que reciba una lista de regalos como una
@@ -23,12 +23,14 @@ tupla y filtre los que empiezan con la letra "R". Devuelve una nueva lista con s
 regalos.
 '''
 def filtrar_regalos(regalos):
-    regalosConR = [regalo for regalo in regalos if regalo.lower().startswith('r')]
-    return regalosConR
+    regalosR = [regalo for regalo in regalos if regalo.lower().startswith('r')]
+    return regalosR
 
+print('\nEJERCICIO 2')
 regalos = ("Ramo", "Ropa", "Consola", "Libro", "Perro", "Robot")
 resultados = filtrar_regalos(regalos)
 print(resultados)
+print('\n------------------------')
 
 '''
 Tienes una lista de números que representan el tamaño de bolas de nieve que hiciste.
@@ -44,7 +46,9 @@ def contar_bolas(numeros):
 
     return contador
 
+print('\nEJERCICIO 3')
 print(contar_bolas([1, 5, 3, 10]))
+print('\n------------------------')
 
 '''
 Crea una función llamada sorteo_navidad que reciba dos listas: una con nombres de
@@ -54,11 +58,11 @@ persona y devolverá una lista de tuplas con los resultados.
 
 
 def sorteo_navidad(listaNombres, listaPremios):
-    premios_aleatorios = random.sample(listaPremios, len(listaNombres))
+    premios_random = random.sample(listaPremios, len(listaNombres))
     resultados = []
 
     for i in range(len(listaNombres)):
-        resultados.append((listaNombres[i], premios_aleatorios[i]))
+        resultados.append((listaNombres[i], premios_random[i]))
 
     return resultados
 
@@ -66,7 +70,9 @@ nombres = ["Nahuel", "Luis", "Sara", "Laura"]
 premios = ["Switch", "Ordenador", "Pijama", "Calcetines", "test"]
 
 resultados = sorteo_navidad(nombres, premios)
+print('\nEJERCICIO 4')
 print(resultados)
+print('\n------------------------')
 
 '''
 Crea una función llamada cuenta_regresiva que reciba un número n y haga una
@@ -74,25 +80,25 @@ cuenta regresiva desde ese número hasta 1. Por cada número, imprime "3" si es
 divisible por 3, "?" si es divisible por 5, y "^" si es divisible por ambos.
 '''
 def cuenta_regresiva(n):
-    for i in range(n, 0, -1):  # Cuenta regresiva desde n hasta 1
+    for i in range(n, 0, -1):
         linea = str(i)
         if i%3 == 0 and i % 5 == 0:
-            linea += " divisible por ambos"  # Si es divisible por 3 y 5, agrega "^"
+            linea += " divisible por 3 y 5"
         elif i%3 == 0:
-            linea += " divisible por 3"  # Si es divisible solo por 3, agrega "3"
+            linea += " divisible por 3"
         elif i%5 == 0:
-            linea += " divisible por 5"  # Si es divisible solo por 5, agrega "5"
+            linea += " divisible por 5"
+        print(linea)
 
-        print(linea)  # Imprime el número seguido de su valor asignado
-
+print('\nEJERCICIO 5')
 cuenta_regresiva(10)
+print('\n------------------------')
 
 '''
 Escribe una función llamada sec_natal que reciba una lista de tuplas con el nombre de
 una persona y su edad, y devuelva una lista con el nombre de las personas mayores de
 edad (18 años o más). La lista debe estar ordenada de forma alfabética.
 '''
-
 
 def sec_natal(listaNombreEdad):
     listaMayoresEdad = []
@@ -104,9 +110,11 @@ def sec_natal(listaNombreEdad):
     listaMayoresEdad.sort()
     return listaMayoresEdad
 
+print('\nEJERCICIO 6')
 personas = [("Nahuel", 25), ("Luis", 22),("Bebe", 2), ("Sara", 24), ("Laura", 26)]
 resultado = sec_natal(personas)
 print(resultado)
+print('\n------------------------')
 
 '''
 Crea una función llamada resolver_sudoku que reciba una lista de listas representando
@@ -126,13 +134,64 @@ def crearTablero():
 
     return tablero
 
-
 def imprimir_tablero(tablero):
     for fila in tablero:
         print(*fila)
 
+print("\nEjercicio SUDOKU")
 tablero = crearTablero()
 imprimir_tablero(tablero)
+print('\n------------------------')
+
+'''
+El problema de las N-Reinas consiste en colocar N reinas en un tablero de
+ajedrez de ( N x N ) de manera que ninguna reina ataque a otra. Esto significa
+que no puede haber dos reinas en la misma fila, columna o diagonal.
+Crea una función resolver_n_reinas(n) que encuentre una solución al problema
+para un tablero de tamaño n. La función debe devolver una lista de posiciones
+(tuplas) donde se colocan las reinas.
+'''
+
+def ejercicio_reinas(n):
+    tablero = [-1] * n
+
+    def es_valido(fila, col):
+        for i in range(fila):
+            if tablero[i] == col or abs(tablero[i] - col) == abs(i - fila):
+                return False
+        return True
+
+    def colocar_reinas(fila):
+        if fila == n:
+            return True
+
+        for col in range(n):
+            if es_valido(fila, col):
+                tablero[fila] = col
+                if colocar_reinas(fila + 1):
+                    return True
+                tablero[fila] = -1
+        return False
+
+    colocar_reinas(0)
+
+    solucion = [(i, tablero[i]) for i in range(n)]
+    return solucion
+
+def mostrar_tablero(n, solucion):
+    tablero_visual = [['[]' for _ in range(n)] for _ in range(n)]
+
+    for fila, col in solucion:
+        tablero_visual[fila][col] = 'R'  #
+
+    for fila in tablero_visual:
+        print(" ".join(fila))
+
+print("\nEjercicio REINAS")
+solucion = ejercicio_reinas(10)
+mostrar_tablero(10, solucion)
+print(f'COORDENADAS {solucion}')
+print('\n------------------------')
 
 '''
 • Cada letra del mensaje se convierte en un número según su posición en
@@ -154,7 +213,6 @@ o signos de puntuación).
 como texto.
 '''
 
-
 def cifrar_mensaje(mensaje: str, k: int) -> list[int]:
     mensaje = mensaje.upper()
     numeros = []
@@ -170,7 +228,8 @@ def cifrar_mensaje(mensaje: str, k: int) -> list[int]:
         bloques_cifrados.append(sum(bloque))
 
     return bloques_cifrados
-
+print('\nEJERCICIO CIFRADO')
 mensaje = 'Me llamo Nahuel'
 cifrado = cifrar_mensaje(mensaje, 2)
 print(f'Mensaje cifrado: {cifrado}')
+print('\n------------------------')
