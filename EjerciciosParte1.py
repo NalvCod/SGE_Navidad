@@ -4,14 +4,15 @@ import random
 Escribe una función llamada imprimir_arbol que reciba un número entero n y dibuje
 un árbol de Navidad en la consola con n niveles.
 '''
-import random
-
 
 def imprimir_arbol(n):
-    for i in range(n):
-        espacio = ' ' * (n - i - 1)
-        estrella = '*' * (2 * i + 1)
-        print(espacio + estrella)
+    for i in range(1, n + 1):
+        espacios = " " * (n - i)
+        asteriscos = "*" * (2 * i - 1)
+        print(espacios + asteriscos)
+
+    base = " " * (n - 2) + "|||"
+    print(base)
 
 print('\nEJERCICIO 1')
 imprimir_arbol(7)
@@ -55,7 +56,6 @@ Crea una función llamada sorteo_navidad que reciba dos listas: una con nombres 
 personas y otra con los premios. El sorteo asignará aleatoriamente un premio a cada
 persona y devolverá una lista de tuplas con los resultados.
 '''
-
 
 def sorteo_navidad(listaNombres, listaPremios):
     premios_random = random.sample(listaPremios, len(listaNombres))
@@ -155,36 +155,36 @@ para un tablero de tamaño n. La función debe devolver una lista de posiciones
 def ejercicio_reinas(n):
     tablero = [-1] * n
 
-    def es_valido(fila, col):
+    def esValido(fila, col):
         for i in range(fila):
             if tablero[i] == col or abs(tablero[i] - col) == abs(i - fila):
                 return False
         return True
 
-    def colocar_reinas(fila):
+    def colocarReinas(fila):
         if fila == n:
             return True
 
         for col in range(n):
-            if es_valido(fila, col):
+            if esValido(fila, col):
                 tablero[fila] = col
-                if colocar_reinas(fila + 1):
+                if colocarReinas(fila + 1):
                     return True
                 tablero[fila] = -1
         return False
 
-    colocar_reinas(0)
+    colocarReinas(0)
 
     solucion = [(i, tablero[i]) for i in range(n)]
     return solucion
 
 def mostrar_tablero(n, solucion):
-    tablero_visual = [['[]' for _ in range(n)] for _ in range(n)]
+    tablero = [['[]' for _ in range(n)] for _ in range(n)]
 
     for fila, col in solucion:
-        tablero_visual[fila][col] = 'R'  #
+        tablero[fila][col] = 'R'
 
-    for fila in tablero_visual:
+    for fila in tablero:
         print(" ".join(fila))
 
 print("\nEjercicio REINAS")
@@ -214,20 +214,20 @@ como texto.
 '''
 
 def cifrar_mensaje(mensaje: str, k: int) -> list[int]:
-    mensaje = mensaje.upper()
+    mensaje = mensaje.lower()
     numeros = []
 
     for letra in mensaje:
-        if letra >= 'A' and letra <= 'Z':
-            numero = ord(letra) - ord('A') + 1
+        if letra >= 'a' and letra <= 'z':
+            numero = ord(letra) - ord('a') + 1
             numeros.append(numero)
 
-    bloques_cifrados = []
+    bloqueCifrados = []
     for i in range(0, len(numeros), k):
         bloque = numeros[i:i + k]
-        bloques_cifrados.append(sum(bloque))
+        bloqueCifrados.append(sum(bloque))
 
-    return bloques_cifrados
+    return bloqueCifrados
 print('\nEJERCICIO CIFRADO')
 mensaje = 'Me llamo Nahuel'
 cifrado = cifrar_mensaje(mensaje, 2)
