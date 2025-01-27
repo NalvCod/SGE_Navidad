@@ -157,7 +157,9 @@ def ejercicio_reinas(n):
 
     def esValido(fila, col):
         for i in range(fila):
-            if tablero[i] == col or abs(tablero[i] - col) == abs(i - fila):
+            if tablero[i] == col:
+                return False
+            if tablero[i] - i == col - fila or tablero[i] + i == col + fila:
                 return False
         return True
 
@@ -228,6 +230,7 @@ def cifrar_mensaje(mensaje: str, k: int) -> list[int]:
         bloqueCifrados.append(sum(bloque))
 
     return bloqueCifrados
+
 print('\nEJERCICIO CIFRADO')
 mensaje = 'Me llamo Nahuel'
 cifrado = cifrar_mensaje(mensaje, 2)
