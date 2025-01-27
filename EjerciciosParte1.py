@@ -152,48 +152,6 @@ para un tablero de tamaño n. La función debe devolver una lista de posiciones
 (tuplas) donde se colocan las reinas.
 '''
 
-def ejercicio_reinas(n):
-    tablero = [-1] * n
-
-    def esValido(fila, col):
-        for i in range(fila):
-            if tablero[i] == col:
-                return False
-            if tablero[i] - i == col - fila or tablero[i] + i == col + fila:
-                return False
-        return True
-
-    def colocarReinas(fila):
-        if fila == n:
-            return True
-
-        for col in range(n):
-            if esValido(fila, col):
-                tablero[fila] = col
-                if colocarReinas(fila + 1):
-                    return True
-                tablero[fila] = -1
-        return False
-
-    colocarReinas(0)
-
-    solucion = [(i, tablero[i]) for i in range(n)]
-    return solucion
-
-def mostrar_tablero(n, solucion):
-    tablero = [['[]' for _ in range(n)] for _ in range(n)]
-
-    for fila, col in solucion:
-        tablero[fila][col] = 'R'
-
-    for fila in tablero:
-        print(" ".join(fila))
-
-print("\nEjercicio REINAS")
-solucion = ejercicio_reinas(10)
-mostrar_tablero(10, solucion)
-print(f'COORDENADAS {solucion}')
-print('\n------------------------')
 
 '''
 • Cada letra del mensaje se convierte en un número según su posición en
